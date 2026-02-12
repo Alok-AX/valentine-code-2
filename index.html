@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💖 For My Beautiful Queen 💖</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="particles"></canvas>
+    <audio id="bgMusic" loop>
+        <source src="https://assets.mixkit.co/music/preview/mixkit-love-and-romance-2053.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Screen 1: Welcome -->
+    <div class="screen active" id="screen1">
+        <div class="container">
+            <div class="crown-animation">👑</div>
+            <h1 class="main-title glow-text">To My Beautiful Queen</h1>
+            <p class="subtitle">Something special awaits you...</p>
+            <div class="heart-beat">💝</div>
+            <button class="interactive-btn" onclick="startJourney()">
+                <span>Start Our Love Story</span>
+                <div class="btn-shine"></div>
+            </button>
+            <p class="hint">🔊 Turn on sound for better experience</p>
+        </div>
+    </div>
+
+    <!-- Screen 2: Name Entry -->
+    <div class="screen" id="screen2">
+        <div class="container">
+            <h2 class="screen-title">First, let me know...</h2>
+            <div class="question-box">
+                <p class="question-text">What should I call you, my love?</p>
+                <div class="input-group">
+                    <input type="text" id="userName" placeholder="Enter your name..." class="name-input">
+                    <button class="select-btn" onclick="saveName()">Continue 💕</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 3: Choose Your Vibe -->
+    <div class="screen" id="screen3">
+        <div class="container">
+            <h2 class="screen-title">Choose Your Vibe, <span id="displayName"></span>! ✨</h2>
+            <div class="vibe-grid">
+                <div class="vibe-card" onclick="selectVibe('romantic', this)">
+                    <div class="vibe-icon">🌹</div>
+                    <h3>Romantic</h3>
+                    <p>Sweet & Lovely</p>
+                </div>
+                <div class="vibe-card" onclick="selectVibe('fun', this)">
+                    <div class="vibe-icon">🎉</div>
+                    <h3>Fun & Crazy</h3>
+                    <p>Wild & Exciting</p>
+                </div>
+                <div class="vibe-card" onclick="selectVibe('dreamy', this)">
+                    <div class="vibe-icon">✨</div>
+                    <h3>Dreamy</h3>
+                    <p>Magical & Sparkly</p>
+                </div>
+                <div class="vibe-card" onclick="selectVibe('spicy', this)">
+                    <div class="vibe-icon">🔥</div>
+                    <h3>Spicy</h3>
+                    <p>Hot & Bold</p>
+                </div>
+            </div>
+            <button class="select-btn hidden" id="vibeNext" onclick="goToScreen(4)">Next 💖</button>
+        </div>
+    </div>
+
+    <!-- Screen 4: Love Quiz -->
+    <div class="screen" id="screen4">
+        <div class="container">
+            <div class="quiz-header">
+                <h2 class="screen-title">Love Quiz Time! 💕</h2>
+                <div class="quiz-progress-bar">
+                    <div class="quiz-progress-fill" id="quizProgress"></div>
+                </div>
+                <p class="quiz-counter"><span id="currentQ">1</span>/5</p>
+            </div>
+            
+            <div class="quiz-container">
+                <div class="quiz-box">
+                    <h3 class="quiz-question" id="quizQuestion"></h3>
+                    <div class="quiz-options" id="quizOptions"></div>
+                </div>
+                
+                <div class="quiz-result hidden" id="quizResult">
+                    <div class="result-icon">💖</div>
+                    <p class="result-message" id="resultMessage"></p>
+                    <button class="select-btn" onclick="nextQuestion()">Next Question 💕</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 5: Heart Collector Game -->
+    <div class="screen" id="screen5">
+        <div class="container">
+            <h2 class="screen-title">Catch My Love! 💕</h2>
+            <div class="game-stats">
+                <div class="stat">
+                    <span class="stat-label">Hearts:</span>
+                    <span class="stat-value" id="heartCount">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Time:</span>
+                    <span class="stat-value" id="gameTime">20</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Level:</span>
+                    <span class="stat-value" id="gameLevel">1</span>
+                </div>
+            </div>
+            
+            <div class="game-area" id="gameArea">
+                <div class="player-basket" id="basket">🧺</div>
+                <p class="game-instruction">Move left/right to catch hearts!</p>
+                <div class="game-controls">
+                    <button class="control-btn" id="leftBtn">⬅️</button>
+                    <button class="control-btn" id="rightBtn">➡️</button>
+                </div>
+            </div>
+            
+            <button class="select-btn" onclick="startGame()">Start Game! 🎮</button>
+        </div>
+    </div>
+
+    <!-- Screen 6: Build Your Dream Date -->
+    <div class="screen" id="screen6">
+        <div class="container">
+            <h2 class="screen-title">Build Our Dream Date! 💑</h2>
+            
+            <div class="date-builder">
+                <div class="date-section">
+                    <h3>Choose Location:</h3>
+                    <div class="choice-grid">
+                        <div class="choice-card" onclick="selectChoice('location', 'beach', this)">
+                            <div class="choice-emoji">🏖️</div>
+                            <p>Beach Sunset</p>
+                        </div>
+                        <div class="choice-card" onclick="selectChoice('location', 'mountain', this)">
+                            <div class="choice-emoji">⛰️</div>
+                            <p>Mountain Top</p>
+                        </div>
+                        <div class="choice-card" onclick="selectChoice('location', 'city', this)">
+                            <div class="choice-emoji">🌃</div>
+                            <p>City Lights</p>
+                        </div>
+                        <div class="choice-card" onclick="selectChoice('location', 'home', this)">
+                            <div class="choice-emoji">🏡</div>
+                            <p>Cozy Home</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="date-section">
+                    <h3>Choose Activity:</h3>
+                    <div class="choice-grid">
+                        <div class="choice-card" onclick="selectChoice('activity', 'dinner', this)">
+                            <div class="choice-emoji">🍽️</div>
+                            <p>Romantic Dinner</p>
+                        </div>
+                        <div class="choice-card" onclick="selectChoice('activity', 'dance', this)">
+                            <div class="choice-emoji">💃</div>
+                            <p>Dancing</p>
+                        </div>
+                        <div class="choice-card" onclick="selectChoice('activity', 'movie', this)">
+                            <div class="choice-emoji">🎬</div>
+                            <p>Movie Night</p>
+                        </div>
+                        <div class="choice-card" onclick="selectChoice('activity', 'adventure', this)">
+                            <div class="choice-emoji">🎢</div>
+                            <p>Adventure</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="date-section">
+                    <h3>Choose Mood:</h3>
+                    <div class="choice-grid">
+                        <div class="choice-card" onclick="selectChoice('mood', 'romantic', this)">
+                            <div class="choice-emoji">🌹</div>
+                            <p>Romantic</p>
+                        </div>
+                        <div class="choice-card" onclick="selectChoice('mood', 'fun', this)">
+                            <div class="choice-emoji">🎊</div>
+                            <p>Fun & Playful</p>
+                        </div>
+                        <div class="choice-card" onclick="selectChoice('mood', 'chill', this)">
+                            <div class="choice-emoji">😌</div>
+                            <p>Chill & Relax</p>
+                        </div>
+                        <div class="choice-card" onclick="selectChoice('mood', 'exciting', this)">
+                            <div class="choice-emoji">⚡</div>
+                            <p>Exciting</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="select-btn hidden" id="dateNext" onclick="goToScreen(7)">Create Our Date! 💕</button>
+        </div>
+    </div>
+
+    <!-- Screen 7: Date Result -->
+    <div class="screen" id="screen7">
+        <div class="container">
+            <h2 class="screen-title">Our Perfect Date! 🌟</h2>
+            <div class="date-result" id="dateResult"></div>
+            <button class="select-btn" onclick="goToScreen(8)">Continue 💖</button>
+        </div>
+    </div>
+
+    <!-- Screen 8: Customize Love Message -->
+    <div class="screen" id="screen8">
+        <div class="container">
+            <h2 class="screen-title">Pick What Describes Us Best! 💕</h2>
+            
+            <div class="message-builder">
+                <div class="message-section">
+                    <p class="message-prompt">Our love is...</p>
+                    <div class="word-choices">
+                        <button class="word-btn" onclick="selectWord(0, 'magical', this)">✨ Magical</button>
+                        <button class="word-btn" onclick="selectWord(0, 'perfect', this)">💯 Perfect</button>
+                        <button class="word-btn" onclick="selectWord(0, 'crazy', this)">🔥 Crazy</button>
+                        <button class="word-btn" onclick="selectWord(0, 'beautiful', this)">🌹 Beautiful</button>
+                    </div>
+                </div>
+
+                <div class="message-section">
+                    <p class="message-prompt">You make me feel...</p>
+                    <div class="word-choices">
+                        <button class="word-btn" onclick="selectWord(1, 'complete', this)">💖 Complete</button>
+                        <button class="word-btn" onclick="selectWord(1, 'alive', this)">⚡ Alive</button>
+                        <button class="word-btn" onclick="selectWord(1, 'blessed', this)">🙏 Blessed</button>
+                        <button class="word-btn" onclick="selectWord(1, 'happy', this)">😊 Happy</button>
+                    </div>
+                </div>
+
+                <div class="message-section">
+                    <p class="message-prompt">Together we are...</p>
+                    <div class="word-choices">
+                        <button class="word-btn" onclick="selectWord(2, 'unstoppable', this)">🚀 Unstoppable</button>
+                        <button class="word-btn" onclick="selectWord(2, 'soulmates', this)">👫 Soulmates</button>
+                        <button class="word-btn" onclick="selectWord(2, 'forever', this)">♾️ Forever</button>
+                        <button class="word-btn" onclick="selectWord(2, 'epic', this)">⭐ Epic</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="custom-message-preview" id="messagePreview">
+                <p>Your message will appear here...</p>
+            </div>
+
+            <button class="select-btn hidden" id="messageNext" onclick="goToScreen(9)">Generate My Letter 💌</button>
+        </div>
+    </div>
+
+    <!-- Screen 9: Memory Lane -->
+    <div class="screen" id="screen9">
+        <div class="container">
+            <h2 class="screen-title">Our Memory Lane 📸</h2>
+            <p class="subtitle">Click on each memory to reveal it!</p>
+            
+            <div class="memory-grid">
+                <div class="memory-box" onclick="revealMemory(this, 0)">
+                    <div class="memory-front">
+                        <span class="lock-icon">🔒</span>
+                        <p>Memory #1</p>
+                    </div>
+                    <div class="memory-back">
+                        <span class="memory-emoji">😍</span>
+                        <p>First Time I Saw You</p>
+                        <small>My heart stopped</small>
+                    </div>
+                </div>
+
+                <div class="memory-box" onclick="revealMemory(this, 1)">
+                    <div class="memory-front">
+                        <span class="lock-icon">🔒</span>
+                        <p>Memory #2</p>
+                    </div>
+                    <div class="memory-back">
+                        <span class="memory-emoji">💕</span>
+                        <p>Our First Date</p>
+                        <small>Unforgettable moments</small>
+                    </div>
+                </div>
+
+                <div class="memory-box" onclick="revealMemory(this, 2)">
+                    <div class="memory-front">
+                        <span class="lock-icon">🔒</span>
+                        <p>Memory #3</p>
+                    </div>
+                    <div class="memory-back">
+                        <span class="memory-emoji">🥰</span>
+                        <p>When You Said Yes</p>
+                        <small>Best day ever</small>
+                    </div>
+                </div>
+
+                <div class="memory-box" onclick="revealMemory(this, 3)">
+                    <div class="memory-front">
+                        <span class="lock-icon">🔒</span>
+                        <p>Memory #4</p>
+                    </div>
+                    <div class="memory-back">
+                        <span class="memory-emoji">😘</span>
+                        <p>First Kiss</p>
+                        <small>Pure magic</small>
+                    </div>
+                </div>
+
+                <div class="memory-box" onclick="revealMemory(this, 4)">
+                    <div class="memory-front">
+                        <span class="lock-icon">🔒</span>
+                        <p>Memory #5</p>
+                    </div>
+                    <div class="memory-back">
+                        <span class="memory-emoji">❤️</span>
+                        <p>Every Day Since</p>
+                        <small>Falling more in love</small>
+                    </div>
+                </div>
+
+                <div class="memory-box" onclick="revealMemory(this, 5)">
+                    <div class="memory-front">
+                        <span class="lock-icon">🔒</span>
+                        <p>Memory #6</p>
+                    </div>
+                    <div class="memory-back">
+                        <span class="memory-emoji">💍</span>
+                        <p>Our Future</p>
+                        <small>Forever together</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="memory-counter">
+                <p>Unlocked: <span id="memoryCount">0</span>/6</p>
+            </div>
+
+            <button class="select-btn hidden" id="memoryNext" onclick="goToScreen(10)">Continue 💖</button>
+        </div>
+    </div>
+
+    <!-- Screen 10: Love Calculator -->
+    <div class="screen" id="screen10">
+        <div class="container">
+            <h2 class="screen-title">Love Compatibility Calculator 💕</h2>
+            
+            <div class="calculator-box">
+                <div class="calc-names">
+                    <div class="calc-name-input">
+                        <label>Your Name:</label>
+                        <input type="text" id="name1" placeholder="Your name" value="">
+                    </div>
+                    <div class="calc-heart">💖</div>
+                    <div class="calc-name-input">
+                        <label>My Name:</label>
+                        <input type="text" id="name2" placeholder="Alok" value="Alok">
+                    </div>
+                </div>
+
+                <button class="select-btn" onclick="calculateLove()">Calculate Our Love! 💕</button>
+
+                <div class="calc-result hidden" id="calcResult">
+                    <div class="percentage-ring">
+                        <svg width="200" height="200">
+                            <circle cx="100" cy="100" r="90" class="ring-bg"></circle>
+                            <circle cx="100" cy="100" r="90" class="ring-fill" id="ringFill"></circle>
+                        </svg>
+                        <div class="percentage-text" id="percentageText">0%</div>
+                    </div>
+                    <h3 class="calc-verdict" id="calcVerdict"></h3>
+                    <p class="calc-message" id="calcMessage"></p>
+                </div>
+            </div>
+
+            <button class="select-btn hidden" id="calcNext" onclick="goToScreen(11)">Continue to Final Surprise 💝</button>
+        </div>
+    </div>
+
+    <!-- Screen 11: Final Love Letter -->
+    <div class="screen" id="screen11">
+        <div class="container">
+            <h2 class="screen-title">Open Your Heart 💌</h2>
+            
+            <div class="envelope-container" id="envelopeContainer">
+                <div class="envelope" id="envelope" onclick="openLetter()">
+                    <div class="envelope-top"></div>
+                    <div class="envelope-body">
+                        <p class="tap-hint">Tap to Open 💕</p>
+                    </div>
+                    <div class="envelope-letter">
+                        <div class="letter-content" id="letterContent"></div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="select-btn hidden" id="finalBtn" onclick="goToScreen(12)">One More Surprise! 🎁</button>
+        </div>
+    </div>
+
+    <!-- Screen 12: Grand Finale -->
+    <div class="screen" id="screen12">
+        <div class="container">
+            <div class="fireworks-container" id="fireworksContainer"></div>
+            
+            <h1 class="finale-title">Happy Valentine's Day! 💖</h1>
+            <h2 class="finale-subtitle" id="finaleSubtitle"></h2>
+
+            <div class="finale-stats">
+                <div class="finale-stat">
+                    <div class="stat-number" id="stat1">0</div>
+                    <p>Days of Love</p>
+                </div>
+                <div class="finale-stat">
+                    <div class="stat-number">∞</div>
+                    <p>More to Come</p>
+                </div>
+                <div class="finale-stat">
+                    <div class="stat-number">100%</div>
+                    <p>My Love for You</p>
+                </div>
+            </div>
+
+            <div class="finale-message">
+                <p class="big-text">You Are My Everything</p>
+                <p>Thank you for being you, for your smile, your love, and for choosing me every day.</p>
+                <p>This is just the beginning of our forever! 💕</p>
+            </div>
+
+            <div class="finale-actions">
+                <button class="select-btn share-btn" onclick="shareThis()">📱 Share & Flex! 💅</button>
+                <button class="select-btn restart-btn" onclick="restartExperience()">🔄 Experience Again</button>
+                <button class="select-btn screenshot-btn" onclick="takeScreenshot()">📸 Save This Moment</button>
+            </div>
+
+            <div class="social-flex">
+                <p>💅 Show this to your friends and make them jealous! 😎</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
